@@ -1,0 +1,49 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    #naiyou {
+        height: 140px;
+        resize: none;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+<form action="/add_action" method="POST" enctype="multipart/form-data">
+    <label for="namae">名前 :</label>
+    <input type="text" id="namae" name="namae" required><br><br>
+    <label for="bunrui">分類 :</label>
+    <input type="text" id="bunrui" name="bunrui"><br><br>
+    <label for="naiyou">内容 :</label>
+    <textarea id="naiyou" name="naiyou" required></textarea><br><br>
+    <label for="photos">写真 :</label><br>
+    <input type="file" id="photo1" name="photos" accept="image/jpeg, image/png, image/gif" required><br>
+    <input type="file" id="photo2" name="photos" accept="image/jpeg, image/png, image/gif"><br>
+    <input type="file" id="photo3" name="photos" accept="image/jpeg, image/png, image/gif"><br>
+    <input type="file" id="photo4" name="photos" accept="image/jpeg, image/png, image/gif"><br>
+    <input type="file" id="photo5" name="photos" accept="image/jpeg, image/png, image/gif"><br><br>
+    <button type="submit">登録</button>
+</form>
