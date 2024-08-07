@@ -24,7 +24,6 @@ import base64
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
 from PyQt5.QtCore import QRect, QCoreApplication, QSize, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtGui import QIcon
 from sqlalchemy import text
 import sys
 import threading
@@ -96,7 +95,11 @@ def amd():
     elif yarukoto == 'modify':
         bunrui = request.form.get('bunrui')
         naiyou = request.form.get('naiyou')
-        return redirect(url_for('modify', namae=namae, bunrui=bunrui, naiyou=naiyou, p1=bool(int(request.form.get('p1'))), p2=bool(int(request.form.get('p2'))), p3=bool(int(request.form.get('p3'))), p4=bool(int(request.form.get('p4')))))
+        p1 = bool(int(request.form.get('p1')))
+        p2 = bool(int(request.form.get('p2')))
+        p3 = bool(int(request.form.get('p3')))
+        p4 = bool(int(request.form.get('p4')))
+        return redirect(url_for('modify', namae=namae, bunrui=bunrui, naiyou=naiyou, p1=p1, p2=p2, p3=p3, p4=p4))
     elif yarukoto == 'delete':
         delete_page(namae)
         return render_template('osirase.html', mode=3)
@@ -152,7 +155,11 @@ def modify():
     namae = request.args.get('namae')
     bunrui = request.args.get('bunrui')
     naiyou = request.args.get('naiyou')
-    return render_template('modify.html', item=syokubutsu(namae=namae, naiyou=naiyou, bunrui=bunrui), p1=request.args.get('p1'), p2=request.args.get('p2'), p3=request.args.get('p3'), p4=request.args.get('p4'))
+    p1 = request.args.get('p1')
+    p2 = request.args.get('p2')
+    p3 = request.args.get('p3')
+    p4 = request.args.get('p4')
+    return render_template('modify.html', item=syokubutsu(namae=namae, naiyou=naiyou, bunrui=bunrui), p1=p1, p2=p2, p3=p3, p4=p4)
 
 @app.route('/modify_exec', methods=['POST'])
 def modify_exec():
@@ -211,7 +218,6 @@ class main_form(object):
         if not mainQT.objectName():
             mainQT.setObjectName(u"mainQT")
         mainQT.resize(921, 731)
-        self.setWindowIcon(QIcon('icon.ico'))
         self.centralwidget = QWidget(mainQT)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)

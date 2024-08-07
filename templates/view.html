@@ -1,83 +1,13 @@
-<style>
-    body {
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view.css') }}">
+    <style>
+        body {
         font-family: Arial, sans-serif;
         background-image: url("{{ url_for('static', filename='background.png') }}");
         background-size: cover;
-    }
-    .image-container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .image-container img {
-        margin: 5px;
-        width: 80px;
-        height: 80px; 
-        cursor: pointer; 
-    }
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 999;
-        padding-top: 25px;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.9);
-    }
-    .modal-content {
-        margin: auto;
-        display: block;
-        width: 80%;
-    }
-    .modal-content img {
-        width: 100%;
-        height: auto;
-        display: block;
-        margin: auto;
-    }
-    .close {
-        color: #ccc;
-        font-size: 30px;
-        font-weight: bold;
-        position: absolute;
-        top: 10px;
-        right: 25px;
-        cursor: pointer;
-    }
-    .close:hover,
-    .close:focus {
-        color: #fff;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    button {
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-    button.add {
-        background-color: #58ACFA; /* 추가 버튼 색상 */
-    }
-    button.modify {
-        background-color: #59e483; /* 수정 버튼 색상 */
-    }
-    button.delete {
-        background-color: #FA5858; /* 삭제 버튼 색상 */
-    }
-    button:hover {
-        opacity: 0.8; /* 버튼 호버 시 투명도 조절 */
-    }
-
-</style>
+        }
+    </style>
+</head>
 <h1>{{ item.namae }}</h1>
 {% if pi0 %}
 <img src="data:image/jpeg;base64,{{ pi0 }}" alt="Image" width="256" height="256" onclick="openModal('{{ pi0|safe }}')">
@@ -121,28 +51,4 @@
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImg">
 </div>
-<script>
-    function openModal(imageBase64) {
-        var modal = document.getElementById("picModal");
-        var modalImg = document.getElementById("modalImg");
-        modal.style.display = "block";
-        modalImg.src = "data:image/jpeg;base64," + imageBase64;
-    }
-    function closeModal() {
-        var modal = document.getElementById("picModal");
-        modal.style.display = "none";
-    }
-    function osirase(event) {
-        var userConfirmed = confirm('本当に削除しても良いですか?');
-        if (!userConfirmed) {
-            event.preventDefault();
-        }
-    }
-    function k(event) {
-        var a = event.submitter;
-        if (a.value === 'delete') {
-            return osirase(event);
-        }
-        return true;
-    }
-</script>
+<script src="{{ url_for('static', filename='view.js') }}"></script>

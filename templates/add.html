@@ -1,39 +1,13 @@
-<style>
-    body {
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='add.css') }}">
+    <style>
+        body {
         font-family: Arial, sans-serif;
         background-image: url("{{ url_for('static', filename='background.png') }}");
         background-size: cover;
-    }
-    label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-    input[type="text"],
-    textarea {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    #naiyou {
-        height: 140px;
-        resize: none;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #45a049;
-    }
-</style>
+        }
+    </style>
+</head>
 <form action="/add_action" method="POST" enctype="multipart/form-data">
     <label for="namae">名前 :</label>
     <input type="text" id="namae" name="namae" required><br><br>

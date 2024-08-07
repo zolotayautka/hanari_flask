@@ -1,60 +1,13 @@
-<style>
-    body {
-        display: flex;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-    }
-    .hidari {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        border-right: 1px solid #ccc;
-        padding: 10px;
-        background-color: #aff19b;
-    }
-    .migi {
-        flex: 3;
-        border: 1px solid #ccc;
-    }
-    .top {
-        flex: 1;
-    }
-    .bottom {
-        flex: 12;
-        border: 1px solid #ccc;
-    }
-    iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-    form {
-        display: flex;
-        align-items: center;
-    }
-    .search-form {
-        height: 35px;
-        box-sizing: border-box;
-        margin-right: 5px;
-        border: none;
-    }
-    button {
-        background-color: #ebe372;
-        color: white;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #f5ef98;
-    }
-</style>
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='icon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
 <div class="hidari">
     <div class="top">
         <form id="search-form" method="POST" target="list_view" action="/search">
             <input type="text" id="keyword-input" name="keyword" class="search-form">
             <button type="submit" class="search-form">
-                <img src="{{ url_for('static', filename='search.png') }}" alt="Load">
+                <img src="{{ url_for('static', filename='search.png') }}">
             </button>
         </form>
     </div>
@@ -65,12 +18,4 @@
 <div class="migi">
     <iframe id="page_view" src=""></iframe>
 </div>
-<script>
-    function load_page(id) {
-        document.getElementById('page_view').src = `/list/${id}`;
-    }
-    function add_page(){
-        document.getElementById('page_view').src = `/add`;
-    }
-    document.getElementById('page_view').src = `/init`;
-</script>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
