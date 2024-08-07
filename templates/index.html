@@ -5,26 +5,24 @@
         margin: 0;
         font-family: Arial, sans-serif;
     }
-    .left {
+    .hidari {
         flex: 1;
         display: flex;
         flex-direction: column;
         border-right: 1px solid #ccc;
         padding: 10px;
-        background-color: #dbd9d9;
+        background-color: #aff19b;
     }
-    .right {
+    .migi {
         flex: 3;
-        padding: 10px;
         border: 1px solid #ccc;
     }
-    .top-section {
+    .top {
         flex: 1;
     }
-    .bottom-section {
-        flex: 9;
+    .bottom {
+        flex: 12;
         border: 1px solid #ccc;
-        background-color: #f0eded;
     }
     iframe {
         width: 100%;
@@ -36,47 +34,43 @@
         align-items: center;
     }
     .search-form {
-        height: 30px;
+        height: 35px;
         box-sizing: border-box;
         margin-right: 5px;
-    }
-    label {
-        width: 50px; 
-        text-align: left; 
-        line-height: 40px;
-        margin-bottom: 13px;
-        font-weight: bold;
+        border: none;
     }
     button {
-        background-color: #4CAF50;
+        background-color: #ebe372;
         color: white;
-        border: none;
         border-radius: 4px;
         cursor: pointer;
     }
     button:hover {
-        background-color: #45a049;
+        background-color: #f5ef98;
     }
 </style>
-<div class="left">
-    <div class="top-section">
-        <form id="search-form" method="POST" target="left-iframe-bottom" action="/search">
-            <label for="keyword-input" class="search-form">検索 :</label>
+<div class="hidari">
+    <div class="top">
+        <form id="search-form" method="POST" target="list_view" action="/search">
             <input type="text" id="keyword-input" name="keyword" class="search-form">
             <button type="submit" class="search-form">
                 <img src="{{ url_for('static', filename='search.png') }}" alt="Load">
             </button>
         </form>
     </div>
-    <div class="bottom-section">
-        <iframe id="left-iframe-bottom" name="left-iframe-bottom" src=""></iframe>
+    <div class="bottom">
+        <iframe id="list_view" name="list_view" src=""></iframe>
     </div>
 </div>
-<div class="right">
-    <iframe id="right-iframe" src=""></iframe>
+<div class="migi">
+    <iframe id="page_view" src=""></iframe>
 </div>
 <script>
-    function loadDetail(id) {
-        document.getElementById('right-iframe').src = `/list/${id}`;
+    function load_page(id) {
+        document.getElementById('page_view').src = `/list/${id}`;
     }
+    function add_page(){
+        document.getElementById('page_view').src = `/add`;
+    }
+    document.getElementById('page_view').src = `/init`;
 </script>

@@ -1,0 +1,72 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url("{{ url_for('static', filename='background.png') }}");
+        background-size: cover;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    #naiyou {
+        height: 140px;
+        resize: none;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+<form action="/modify_exec" method="POST" enctype="multipart/form-data">
+    <label for="namae">名前 :</label>
+    <input type="text" id="namae" value="{{ item.namae }}" disabled><br><br>
+    <input type="hidden" name="namae" value="{{ item.namae }}">
+    <label for="bunrui">分類 :</label>
+    <input type="text" id="bunrui" name="bunrui" value="{{ item.bunrui }}"><br><br>
+    <label for="naiyou">内容 :</label>
+    <textarea id="naiyou" name="naiyou" required>{{ item.naiyou }}</textarea><br><br>
+    <label for="photos">写真 :</label><br>
+    <input type="file" id="photo1" name="photo1" accept="image/jpeg, image/png, image/gif"><br>
+    <input type="hidden" id="cb1d" name="cb1" value="False"> 
+    <input type="file" id="photo2" name="photo2" accept="image/jpeg, image/png, image/gif"><input type="checkbox" id="cb1" name="cb1" value="True" {% if p1 == 'False' %}disabled{% endif %} onchange="c('cb1', 'cb1d')">ファイル削除<br>
+    <input type="hidden" id="cb2d" name="cb2" value="False"> 
+    <input type="file" id="photo3" name="photo3" accept="image/jpeg, image/png, image/gif"><input type="checkbox" id="cb2" name="cb2" value="True" {% if p2 == 'False' %}disabled{% endif %} onchange="c('cb2', 'cb2d')">ファイル削除<br>
+    <input type="hidden" id="cb3d"  name="cb3" value="False"> 
+    <input type="file" id="photo4" name="photo4" accept="image/jpeg, image/png, image/gif"><input type="checkbox" id="cb3" name="cb3" value="True" {% if p3 == 'False' %}disabled{% endif %} onchange="c('cb3', 'cb3d')">ファイル削除<br>
+    <input type="hidden" id="cb4d" name="cb4" value="False"> 
+    <input type="file" id="photo5" name="photo5" accept="image/jpeg, image/png, image/gif"><input type="checkbox" id="cb4" name="cb4" value="True" {% if p4 == 'False' %}disabled{% endif %} onchange="c('cb4', 'cb4d')">ファイル削除<br><br>
+    <button type="submit">修正</button>
+</form>
+<script>
+    function c(cbi, cbd) {
+        var cb = document.getElementById(cbi);
+        var d = document.getElementById(cbd);
+        if (cb.checked) {
+            d.remove();
+        } else {
+            var dcb = document.createElement('input');
+            dcb.type = 'hidden';
+            dcb.name = cbi;
+            dcb.value = 'False';
+            dcb.id = cbd;
+            cb.parentElement.appendChild(dcb);
+        }
+    }
+</script>

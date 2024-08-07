@@ -17,12 +17,12 @@
 #
 #*******************************************************************************
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import base64
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTabWidget, QPushButton
-from PyQt5.QtCore import QRect, QMetaObject, QCoreApplication, QSize, QUrl
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+from PyQt5.QtCore import QRect, QCoreApplication, QSize, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtGui import QIcon
 from sqlalchemy import text
@@ -72,7 +72,7 @@ def search():
     return render_template('list.html', items=results)
 
 @app.route('/list/<int:item_id>')
-def item_detail(item_id):
+def view(item_id):
     item = syokubutsu.query.get_or_404(item_id)
     p0 = None
     p0 = base64.b64encode(item.pic).decode('utf-8')
@@ -85,7 +85,21 @@ def item_detail(item_id):
         pt[2] = base64.b64encode(item.p3).decode('utf-8')
     if item.p4 != None:
         pt[3] = base64.b64encode(item.p4).decode('utf-8')
-    return render_template('detail.html', item=item, pi0=p0, p1=pt[0], p2=pt[1], p3=pt[2], p4=pt[3])
+    return render_template('view.html', item=item, pi0=p0, p1=pt[0], p2=pt[1], p3=pt[2], p4=pt[3])
+
+@app.route('/amd', methods=['POST'])
+def amd():
+    yarukoto = request.form.get('action')
+    namae = request.form.get('namae')
+    if yarukoto == 'add':
+        return redirect(url_for('add'))
+    elif yarukoto == 'modify':
+        bunrui = request.form.get('bunrui')
+        naiyou = request.form.get('naiyou')
+        return redirect(url_for('modify', namae=namae, bunrui=bunrui, naiyou=naiyou, p1=bool(int(request.form.get('p1'))), p2=bool(int(request.form.get('p2'))), p3=bool(int(request.form.get('p3'))), p4=bool(int(request.form.get('p4')))))
+    elif yarukoto == 'delete':
+        delete_page(namae)
+        return render_template('osirase.html', mode=3)
 
 @app.route('/add')
 def add():
@@ -129,105 +143,96 @@ def add_exec():
             new_page = syokubutsu(namae=namae, naiyou=naiyou, bunrui=bunrui, pic=t[0])
         db.session.add(new_page) 
         db.session.commit()
-        return "追加なりました。"
+        return render_template('osirase.html', mode=1)
     except:
         return "すでに存在するページです。"
 
-@app.route('/delete')
-def delete():
-    return render_template('del.html')
+@app.route('/modify')
+def modify():
+    namae = request.args.get('namae')
+    bunrui = request.args.get('bunrui')
+    naiyou = request.args.get('naiyou')
+    return render_template('modify.html', item=syokubutsu(namae=namae, naiyou=naiyou, bunrui=bunrui), p1=request.args.get('p1'), p2=request.args.get('p2'), p3=request.args.get('p3'), p4=request.args.get('p4'))
 
-@app.route('/delete_action', methods=['POST'])
-def delete_exec():
-    namae = request.form['del-keyword']
+@app.route('/modify_exec', methods=['POST'])
+def modify_exec():
+    namae = request.form['namae']
+    naiyou = request.form['naiyou']
+    bunrui = request.form['bunrui']
+    photo1 = request.files.get('photo1')
+    photo2 = request.files.get('photo2')
+    photo3 = request.files.get('photo3')
+    photo4 = request.files.get('photo4')
+    photo5 = request.files.get('photo5')
+    page:syokubutsu = syokubutsu.query.filter(syokubutsu.namae == namae).first()
+    page.naiyou = naiyou
+    page.bunrui = bunrui
+    if photo1:
+        page.pic = photo1.read()
+    if request.form['cb1'] == "True":
+        page.p1 = None
+    else:
+        if photo2:
+            page.p1 = photo2.read()
+    if request.form['cb2'] == "True":
+        page.p2 = None
+    else:
+        if photo3:
+            page.p2 = photo3.read()
+    if request.form['cb3'] == "True":
+        page.p3 = None
+    else:
+        if photo4:
+            page.p3 = photo4.read()
+    if request.form['cb4'] == "True":
+        page.p4 = None
+    else:
+        if photo5:
+            page.p4 = photo5.read()
+    db.session.commit()
+    with db.engine.connect() as connection:
+            connection.execute(text('VACUUM'))
+    return render_template('osirase.html', mode=2)
+
+def delete_page(namae):
     page = syokubutsu.query.filter(syokubutsu.namae == namae).first()
     if page != None:
         db.session.delete(page)
         db.session.commit()
         with db.engine.connect() as connection:
             connection.execute(text('VACUUM'))
-        return "ページを削除しました。"
-    else:
-        return "該当するページがありません。"
+
+@app.route('/init')
+def kb():
+    return render_template('osirase.html')
 
 class main_form(object):
     def setupUi(self, mainQT):
         if not mainQT.objectName():
             mainQT.setObjectName(u"mainQT")
-        mainQT.resize(905, 704)
+        mainQT.resize(921, 731)
         self.setWindowIcon(QIcon('icon.ico'))
         self.centralwidget = QWidget(mainQT)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.tabWidget = QTabWidget(self.centralwidget)
-        self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(0, 0, 905, 704))
-        self.widget = QWidget()
-        self.widget.setObjectName(u"widget")
-        self.verticalLayoutWidget = QWidget(self.widget)
+        self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 901, 671))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 921, 731))
         self.view_layout = QVBoxLayout(self.verticalLayoutWidget)
         self.view_layout.setObjectName(u"view_layout")
         self.view_layout.setContentsMargins(0, 0, 0, 0)
-        self.tabWidget.addTab(self.widget, "")
-        self.widget1 = QWidget()
-        self.widget1.setObjectName(u"widget1")
-        self.add_btn = QPushButton(self.widget1)
-        self.add_btn.setObjectName(u"add_btn")
-        self.add_btn.setGeometry(QRect(20, 10, 91, 31))
-        self.del_btn = QPushButton(self.widget1)
-        self.del_btn.setObjectName(u"del_btn")
-        self.del_btn.setGeometry(QRect(130, 10, 91, 31))
-        self.verticalLayoutWidget_2 = QWidget(self.widget1)
-        self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(10, 50, 881, 611))
-        self.hensyuu_layout = QVBoxLayout(self.verticalLayoutWidget_2)
-        self.hensyuu_layout.setObjectName(u"hensyuu_layout")
-        self.hensyuu_layout.setContentsMargins(0, 0, 0, 0)
-        self.tabWidget.addTab(self.widget1, "")
         mainQT.setCentralWidget(self.centralwidget)
-        self.retranslateUi(mainQT)
-        self.tabWidget.setCurrentIndex(0)
-        QMetaObject.connectSlotsByName(mainQT)
-    def retranslateUi(self, mainQT):
         mainQT.setWindowTitle(QCoreApplication.translate("mainQT", u"\u30cf\u30ca\u30ea", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.widget), QCoreApplication.translate("mainQT", u"\u56f3\u9451", None))
-        self.add_btn.setText(QCoreApplication.translate("mainQT", u"\u8ffd\u52a0", None))
-        self.del_btn.setText(QCoreApplication.translate("mainQT", u"\u524a\u9664", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.widget1), QCoreApplication.translate("mainQT", u"\u7de8\u96c6", None))
 
 class mainQT(QMainWindow, main_form):
     def __init__(self):
         global port
         super().__init__()
         self.setupUi(self)
-        self.setFixedSize(QSize(905, 704))
+        self.setFixedSize(QSize(921, 731))
         self.web_view = QWebEngineView(self.verticalLayoutWidget)
         self.web_view.setUrl(QUrl(f"http://localhost:{port}"))
         self.view_layout.addWidget(self.web_view)
         self.web_view_ = None
-        self.add_btn.clicked.connect(self.add_page)
-        self.del_btn.clicked.connect(self.del_page)
-    
-    def add_page(self):
-        if self.web_view_ != None:
-            self.hensyuu_layout.removeWidget(self.web_view_)
-            self.web_view_.deleteLater()
-            del self.web_view_
-            self.web_view_ = None
-        self.web_view_ = QWebEngineView(self.verticalLayoutWidget)
-        self.web_view_.setUrl(QUrl(f"http://localhost:{port}/add"))
-        self.hensyuu_layout.addWidget(self.web_view_)
-
-    def del_page(self):
-        if self.web_view_ != None:
-            self.hensyuu_layout.removeWidget(self.web_view_)
-            self.web_view_.deleteLater()
-            del self.web_view_
-            self.web_view_ = None
-        self.web_view_ = QWebEngineView(self.verticalLayoutWidget)
-        self.web_view_.setUrl(QUrl(f"http://localhost:{port}/delete"))
-        self.hensyuu_layout.addWidget(self.web_view_)
 
 def run_qt():
     a = QApplication(sys.argv)
