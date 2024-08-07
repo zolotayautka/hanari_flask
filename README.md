@@ -1,9 +1,9 @@
 # ハナリ Flask  
-  
-![1](https://github.com/user-attachments/assets/eab833bd-ebce-4f33-bfc0-7b8c9f2280e9)
-![2](https://github.com/user-attachments/assets/06552962-9b5a-4b40-948d-652210807406)
-![3](https://github.com/user-attachments/assets/b837288f-ff71-4d3b-a226-b015773f3fd8)
-![4](https://github.com/user-attachments/assets/18479ba2-fa88-438e-abbd-444b91fc28f3)
-![5](https://github.com/user-attachments/assets/a3e72b93-f95c-4b96-8d09-65aac7228d00)
-![6](https://github.com/user-attachments/assets/8424aed8-6e24-4900-82de-0d1b1b7382b7)
-![7](https://github.com/user-attachments/assets/af7918a7-5440-47dc-91ea-4c599685c084)
+
+![1](https://github.com/user-attachments/assets/42d137a7-cae2-4763-b787-1a7ccf7d7bea)
+![2](https://github.com/user-attachments/assets/3b865268-e7c3-47d6-a07d-ac1631183da7)
+![3](https://github.com/user-attachments/assets/4b9caf80-5c0f-4c0e-bcaf-0073bd5f5636)
+![4](https://github.com/user-attachments/assets/d4fa3335-6199-4510-880a-addd941e7921)
+![5](https://github.com/user-attachments/assets/a7aeaf70-aa60-4571-a05f-6b82761573b1)
+![6](https://github.com/user-attachments/assets/44b3e703-777a-44dd-8f6d-44dcf65d7077)
+![7](https://github.com/user-attachments/assets/d3da2249-6ed3-4136-b7c8-ac3eba5dd73e)
