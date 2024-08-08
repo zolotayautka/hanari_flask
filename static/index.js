@@ -4,4 +4,3 @@ function load_page(id) {
 function add_page(){
     document.getElementById('page_view').src = `/add`;
 }
-document.getElementById('page_view').src = `/init`;

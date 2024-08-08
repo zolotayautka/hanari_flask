@@ -1,12 +1,5 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='add.css') }}">
-    <style>
-        body {
-        font-family: Arial, sans-serif;
-        background-image: url("{{ url_for('static', filename='background.png') }}");
-        background-size: cover;
-        }
-    </style>
 </head>
 <form action="/modify_exec" method="POST" enctype="multipart/form-data">
     <label for="namae">名前 :</label>

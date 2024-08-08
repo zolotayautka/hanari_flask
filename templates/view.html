@@ -1,12 +1,5 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='view.css') }}">
-    <style>
-        body {
-        font-family: Arial, sans-serif;
-        background-image: url("{{ url_for('static', filename='background.png') }}");
-        background-size: cover;
-        }
-    </style>
 </head>
 <h1>{{ item.namae }}</h1>
 {% if pi0 %}
