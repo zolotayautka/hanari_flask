@@ -9,7 +9,7 @@
     {% else %}
     {% for item in items %}
     <li onclick="parent.load_page({{ item.id }})">
-        <img src="data:image/png;base64,{{ item.pic }}" alt="{{ item.namae }}" class="item-image">
+        <img src="data:image/png;base64,{{ item.pic }}" class="item-image">
         {{ item.namae }}
     </li>
     {% endfor %}
