@@ -3,7 +3,7 @@
 </head>
 <h1>{{ item.namae }}</h1>
 {% if pi0 %}
-<img src="data:image/jpeg;base64,{{ pi0 }}" alt="Image" width="256" height="256" onclick="openModal('{{ pi0|safe }}')">
+<img src="data:image/jpeg;base64,{{ pi0 }}" width="256" height="256" onclick="openModal('{{ pi0|safe }}')">
 {% endif %}
 {% if item.bunrui %}
 <p>{{ item.bunrui }}</p>
@@ -13,16 +13,16 @@
 <p>{{ item.naiyou }}</p>
 <div class="image-container">
     {% if p1 %}
-    <img src="data:image/jpeg;base64,{{ p1 }}" alt="Image" onclick="openModal('{{ p1|safe }}')">
+    <img src="data:image/jpeg;base64,{{ p1 }}" onclick="openModal('{{ p1|safe }}')">
     {% endif %}
     {% if p2 %}
-    <img src="data:image/jpeg;base64,{{ p2 }}" alt="Image" onclick="openModal('{{ p2|safe }}')">
+    <img src="data:image/jpeg;base64,{{ p2 }}" onclick="openModal('{{ p2|safe }}')">
     {% endif %}
     {% if p3 %}
-    <img src="data:image/jpeg;base64,{{ p3 }}" alt="Image" onclick="openModal('{{ p3|safe }}')">
+    <img src="data:image/jpeg;base64,{{ p3 }}" onclick="openModal('{{ p3|safe }}')">
     {% endif %}
     {% if p4 %}
-    <img src="data:image/jpeg;base64,{{ p4 }}" alt="Image" onclick="openModal('{{ p4|safe }}')">
+    <img src="data:image/jpeg;base64,{{ p4 }}" onclick="openModal('{{ p4|safe }}')">
     {% endif %}
 </div>
 <p>&nbsp</p>
