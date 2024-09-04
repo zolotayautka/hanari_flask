@@ -50,27 +50,6 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
-button {
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-button.add {
-    background-color: #58ACFA;
-}
-button.modify {
-    background-color: #59e483;
-}
-button.delete {
-    background-color: #FA5858;
-}
-button:hover {
-    opacity: 0.8;
+#bar_exec {
+    visibility: hidden;
 }

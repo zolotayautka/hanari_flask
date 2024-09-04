@@ -1,5 +1,5 @@
 <head>
-    <link rel="icon" href="{{ url_for('static', filename='icon.ico') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imgs/icon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <div class="hidari">
@@ -7,7 +7,7 @@
         <form id="search-form" method="POST" target="list_view" action="/search">
             <input type="text" id="keyword-input" name="keyword" class="search-form">
             <button type="submit" class="search-form">
-                <img src="{{ url_for('static', filename='search.png') }}">
+                <img src="{{ url_for('static', filename='imgs/search.png') }}">
             </button>
         </form>
     </div>
@@ -16,6 +16,11 @@
     </div>
 </div>
 <div class="migi">
-    <iframe id="page_view" src="/init"></iframe>
+    <div class="view">
+        <iframe id="page_view" src="/init"></iframe>
+    </div>
+    <div class="bar">
+        <iframe id="bar_view" src="/bar1"></iframe>
+    </div>
 </div>
 <script src="{{ url_for('static', filename='index.js') }}"></script>

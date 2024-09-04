@@ -1,0 +1,19 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #abced8;
+    }
+</style>
+{% if mode == 1 %}
+<p>ページを追加しました。</p>
+{% endif %}
+{% if mode == 2 %}
+<p>ページを修正しました。</p>
+{% endif %}
+{% if mode == 3 %}
+<p>ページを削除しました。</p>
+{% endif %}
+<script>
+    parent.document.getElementById('search-form').submit();
+    parent.load_bar1();
+</script>

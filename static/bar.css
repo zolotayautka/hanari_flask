@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #9fe6f87a;
+}
+button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.add_btn {
+    background-color: #58ACFA;
+}
+.modify_btn {
+    background-color: #59e483;
+}
+.delete_btn {
+    background-color: #FA5858;
+}
+button:hover {
+    opacity: 0.8;
+}

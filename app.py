@@ -67,13 +67,19 @@ def view(item_id):
         pt[3] = base64.b64encode(item.p4).decode('utf-8')
     return render_template('view.html', item=item, pi0=p0, p1=pt[0], p2=pt[1], p3=pt[2], p4=pt[3])
 
+@app.route('/bar1')
+def bar1():
+    return render_template('bar.html', mode=1)
+
+@app.route('/bar2')
+def bar2():
+    return render_template('bar.html', mode=2)
+
 @app.route('/amd', methods=['POST'])
 def amd():
     yarukoto = request.form.get('action')
     namae = request.form.get('namae')
-    if yarukoto == 'add':
-        return redirect(url_for('add'))
-    elif yarukoto == 'modify':
+    if yarukoto == 'modify':
         bunrui = request.form.get('bunrui')
         naiyou = request.form.get('naiyou')
         p1 = bool(int(request.form.get('p1')))
@@ -83,7 +89,7 @@ def amd():
         return redirect(url_for('modify', namae=namae, bunrui=bunrui, naiyou=naiyou, p1=p1, p2=p2, p3=p3, p4=p4))
     elif yarukoto == 'delete':
         delete_page(namae)
-        return render_template('osirase.html', mode=3)
+        return render_template('init.html', mode=3)
 
 @app.route('/add')
 def add():
@@ -127,9 +133,9 @@ def add_exec():
             new_page = syokubutsu(namae=namae, naiyou=naiyou, bunrui=bunrui, pic=t[0])
         db.session.add(new_page) 
         db.session.commit()
-        return render_template('osirase.html', mode=1)
+        return render_template('init.html', mode=1)
     except:
-        return "すでに存在するページです。"
+        return "<style> body { font-family: Arial, sans-serif; background-color: #abced8; } </style>すでに存在するページです。"
 
 @app.route('/modify')
 def modify():
@@ -180,7 +186,7 @@ def modify_exec():
     db.session.commit()
     with db.engine.connect() as connection:
             connection.execute(text('VACUUM'))
-    return render_template('osirase.html', mode=2)
+    return render_template('init.html', mode=2)
 
 def delete_page(namae):
     page = syokubutsu.query.filter(syokubutsu.namae == namae).first()
@@ -192,18 +198,18 @@ def delete_page(namae):
 
 @app.route('/init')
 def kb():
-    return render_template('osirase.html')
+    return render_template('init.html')
 
 class main_form(object):
     def setupUi(self, mainQT):
         if not mainQT.objectName():
             mainQT.setObjectName(u"mainQT")
-        mainQT.resize(921, 731)
+        mainQT.resize(920, 800)
         self.centralwidget = QWidget(mainQT)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 921, 731))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 920, 800))
         self.view_layout = QVBoxLayout(self.verticalLayoutWidget)
         self.view_layout.setObjectName(u"view_layout")
         self.view_layout.setContentsMargins(0, 0, 0, 0)
@@ -215,7 +221,7 @@ class mainQT(QMainWindow, main_form):
         global port
         super().__init__()
         self.setupUi(self)
-        self.setFixedSize(QSize(921, 731))
+        self.setFixedSize(QSize(920, 800))
         self.web_view = QWebEngineView(self.verticalLayoutWidget)
         self.web_view.setUrl(QUrl(f"http://localhost:{port}"))
         self.view_layout.addWidget(self.web_view)

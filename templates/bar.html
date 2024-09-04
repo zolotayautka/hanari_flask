@@ -1,0 +1,12 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bar.css') }}">
+</head>
+{% if mode==1 %}
+<button name="add_btn" class="add_btn" onclick="parent.add_page()">追加</button>
+{% endif %}
+{% if mode==2 %}
+<button name="add_btn" class="add_btn" onclick="parent.add_page()">追加</button>
+<button name="modify_btn" class="modify_btn" onclick="parent.bar_exec('modify')">修正</button>
+<button name="delete_btn" class="delete_btn" onclick="del_page(event)">削除</button>
+{% endif %}
+<script src="{{ url_for('static', filename='bar.js') }}"></script>

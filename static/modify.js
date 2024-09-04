@@ -12,3 +12,4 @@ function c(cbi, cbd) {
         cb.parentElement.appendChild(dcb);
     }
 }
+parent.load_bar1();

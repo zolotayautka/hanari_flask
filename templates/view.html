@@ -10,8 +10,8 @@
 {% else %}
 <p>未分類</p>
 {% endif %}
-<p>{{ item.naiyou }}</p>
-<div class="image-container">
+{{ item.naiyou | safe }}
+<p><div class="image-container">
     {% if p1 %}
     <img src="data:image/jpeg;base64,{{ p1 }}" onclick="openModal('{{ p1|safe }}')">
     {% endif %}
@@ -24,9 +24,8 @@
     {% if p4 %}
     <img src="data:image/jpeg;base64,{{ p4 }}" onclick="openModal('{{ p4|safe }}')">
     {% endif %}
-</div>
-<p>&nbsp</p>
-<form action="/amd" method="post" onsubmit="return k(event)">
+</div></p>
+<form id="bar_exec" action="/amd" method="post">
     <input type="hidden" name="namae" value="{{ item.namae }}">
     <input type="hidden" name="bunrui" value="{{ item.bunrui }}">
     <input type="hidden" name="naiyou" value="{{ item.naiyou }}">
@@ -35,11 +34,8 @@
     <input type="hidden" name="p2" value="{% if p2 %}1{% else %}0{% endif %}">
     <input type="hidden" name="p3" value="{% if p3 %}1{% else %}0{% endif %}">
     <input type="hidden" name="p4" value="{% if p4 %}1{% else %}0{% endif %}">
-    <button type="submit" name="action" value="add" class="add">追加</button>
-    <button type="submit" name="action" value="modify" class="modify">修正</button>
-    <button type="submit" name="action" value="delete" class="delete">削除</button>
+    <input type="hidden" name="action" id="action" value="">
 </form>
-
 <div id="picModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImg">
