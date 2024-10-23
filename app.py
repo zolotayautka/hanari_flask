@@ -2,10 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import base64
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
-from PyQt5.QtCore import QRect, QCoreApplication, QSize, QUrl
-from PyQt5.QtWebEngineWidgets import QWebEngineView
 from sqlalchemy import text
+import webview
 import sys
 import threading
 import os
@@ -200,39 +198,9 @@ def delete_page(namae):
 def kb():
     return render_template('init.html')
 
-class main_form(object):
-    def setupUi(self, mainQT):
-        if not mainQT.objectName():
-            mainQT.setObjectName(u"mainQT")
-        mainQT.resize(920, 800)
-        self.centralwidget = QWidget(mainQT)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayoutWidget = QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 920, 800))
-        self.view_layout = QVBoxLayout(self.verticalLayoutWidget)
-        self.view_layout.setObjectName(u"view_layout")
-        self.view_layout.setContentsMargins(0, 0, 0, 0)
-        mainQT.setCentralWidget(self.centralwidget)
-        mainQT.setWindowTitle(QCoreApplication.translate("mainQT", u"\u30cf\u30ca\u30ea", None))
-
-class mainQT(QMainWindow, main_form):
-    def __init__(self):
-        global port
-        super().__init__()
-        self.setupUi(self)
-        self.setFixedSize(QSize(920, 800))
-        self.web_view = QWebEngineView(self.verticalLayoutWidget)
-        self.web_view.setUrl(QUrl(f"http://localhost:{port}"))
-        self.view_layout.addWidget(self.web_view)
-        self.web_view_ = None
-
-def run_qt():
-    a = QApplication(sys.argv)
-    main_QT = mainQT()
-    main_QT.show()
-    a.exec_()
-    os._exit(0)
+def run_server():
+    global port
+    app.run('0.0.0.0', port=port, debug=False)
 
 if __name__ == '__main__':
     with app.app_context():
@@ -244,6 +212,8 @@ if __name__ == '__main__':
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             if sock.connect_ex(('localhost', port)) != 0:
                 break
-    thread = threading.Thread(target = run_qt)
+    thread = threading.Thread(target = run_server)
     thread.start()
-    app.run('0.0.0.0', port=port, debug=False)
+    wb = webview.create_window("0", "http://localhost:" + str(port), width=840, height=680)
+    webview.start()
+    os._exit(0)
