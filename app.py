@@ -214,6 +214,6 @@ if __name__ == '__main__':
                 break
     thread = threading.Thread(target = run_server)
     thread.start()
-    wb = webview.create_window("0", "http://localhost:" + str(port), width=840, height=680)
+    wb = webview.create_window("ハナリ", "http://localhost:" + str(port), width=840, height=680)
     webview.start()
     os._exit(0)
