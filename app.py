@@ -3,12 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import base64
 from sqlalchemy import text
-import webview
 import sys
-import threading
 import os
-import random
-import socket
 
 app = Flask(__name__)
 if getattr(sys, 'frozen', False):
@@ -198,22 +194,8 @@ def delete_page(namae):
 def kb():
     return render_template('init.html')
 
-def run_server():
-    global port
-    app.run('0.0.0.0', port=port, debug=False)
-
 if __name__ == '__main__':
     with app.app_context():
         if not os.path.exists(os.path.join(BASE_DIR, 'hanari.db')):
             db.create_all()
-    global port
-    while True:
-        port = random.randint(7000, 8999)
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            if sock.connect_ex(('localhost', port)) != 0:
-                break
-    thread = threading.Thread(target = run_server)
-    thread.start()
-    wb = webview.create_window("ハナリ", "http://localhost:" + str(port), width=840, height=680)
-    webview.start()
-    os._exit(0)
+    app.run('0.0.0.0', port=5000, debug=False)
