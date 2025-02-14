@@ -28,7 +28,7 @@ class syokubutsu(db.Model):
     p4 = db.Column(db.LargeBinary, nullable=True)
 
 @app.route('/')
-def index():
+def index_page():
     return render_template('index.html')
 
 @app.route('/search', methods=['POST'])
@@ -70,7 +70,7 @@ def bar2():
     return render_template('bar.html', mode=2)
 
 @app.route('/amd', methods=['POST'])
-def amd():
+def add_modify_delete():
     yarukoto = request.form.get('action')
     namae = request.form.get('namae')
     if yarukoto == 'modify':
@@ -86,7 +86,7 @@ def amd():
         return render_template('init.html', mode=3)
 
 @app.route('/add')
-def add():
+def add_page():
     return render_template('add.html')
 
 @app.route('/add_action', methods=['POST'])
@@ -132,7 +132,7 @@ def add_exec():
         return "<style> body { font-family: Arial, sans-serif; background-color: #abced8; } </style>すでに存在するページです。"
 
 @app.route('/modify')
-def modify():
+def modify_page():
     namae = request.args.get('namae')
     bunrui = request.args.get('bunrui')
     naiyou = request.args.get('naiyou')
