@@ -80,7 +80,7 @@ def add_modify_delete():
         p2 = bool(int(request.form.get('p2')))
         p3 = bool(int(request.form.get('p3')))
         p4 = bool(int(request.form.get('p4')))
-        return redirect(url_for('modify', namae=namae, bunrui=bunrui, naiyou=naiyou, p1=p1, p2=p2, p3=p3, p4=p4))
+        return redirect(url_for('modify_page', namae=namae, bunrui=bunrui, naiyou=naiyou, p1=p1, p2=p2, p3=p3, p4=p4))
     elif yarukoto == 'delete':
         delete_page(namae)
         return render_template('init.html', mode=3)
@@ -131,7 +131,7 @@ def add_exec():
     except:
         return "<style> body { font-family: Arial, sans-serif; background-color: #abced8; } </style>すでに存在するページです。"
 
-@app.route('/modify')
+@app.route('/modify_page')
 def modify_page():
     namae = request.args.get('namae')
     bunrui = request.args.get('bunrui')
@@ -198,4 +198,4 @@ if __name__ == '__main__':
     with app.app_context():
         if not os.path.exists(os.path.join(BASE_DIR, 'hanari.db')):
             db.create_all()
-    app.run('0.0.0.0', port=5000, debug=False)
+    app.run('0.0.0.0', port=5001, debug=False)
